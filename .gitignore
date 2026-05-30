@@ -16,3 +16,6 @@ hubspot.config.yml.bak
 _hs_*.txt
 _*.txt
 _*.mjs
+
+# Claude Code runtime lock
+.claude/scheduled_tasks.lock
