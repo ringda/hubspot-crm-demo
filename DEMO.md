@@ -84,9 +84,19 @@ memo flagged in step 1.
 
 ## Reset between demos
 
-The skill never deletes, so reset by hand in the HubSpot UI:
+Recommended state: **keep Priya Patel** as a living write-direction sample
+(the contact + qualification NOTE make the best portfolio screenshot, and a
+re-run will then demo the dedupe/update path instead of a fresh create).
 
-1. Delete the **Priya Patel** contact created in step 2.
-2. (Optional) Remove the Jamie Chen ↔ Northstar Ops association from step 3.
+The skill — and the HubSpot MCP server — perform **no delete or un-associate
+operations** by design, so any teardown is done by hand in the HubSpot UI:
 
-Then the portal is back to its original 5 contacts + 3 deals for the next run.
+1. **Remove the Jamie Chen ↔ Northstar Ops association** (so the outbound memo
+   keeps re-demonstrating the "inferred, not stored" insight): open Jamie's
+   record → Deals card → unlink the deal.
+2. **Only if fully resetting** — delete the **Priya Patel** contact: open her
+   record → Actions → Delete (HubSpot will offer to remove the attached NOTE
+   too).
+
+This hands-only teardown is itself part of the demo: writes go through the
+agent, destructive actions stay with the human.
