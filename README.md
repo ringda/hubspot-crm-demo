@@ -39,11 +39,18 @@ Claude Code ──(.mcp.json)──► @hubspot/mcp-server (stdio, npx) ──�
 - Claude Code
 - A HubSpot account (any tier, including Free)
 
-### 1. Create a HubSpot Private App + token
+### 1. Create a HubSpot token
 
-In HubSpot: **Settings → Integrations → Private Apps → Create a private app.**
+`@hubspot/mcp-server` reads any HubSpot token sent as a Bearer credential, so
+either works:
 
-On the **Scopes** tab, enable (matching this demo's read/write needs):
+- **Service Key** (recommended; this demo uses one) — HubSpot's current
+  account-level API credential. **Development → Keys → Service Keys → Create
+  service key.** Cleaner UI and the path HubSpot now steers you toward.
+- **Private App token** — **Settings → Integrations → Private Apps → Create a
+  private app** (legacy; HubSpot shows a deprecation notice).
+
+Either way, enable these scopes (matching this demo's read/write needs):
 
 ```
 crm.objects.contacts.read      crm.objects.contacts.write
@@ -53,7 +60,7 @@ crm.schemas.contacts.read
 crm.objects.owners.read
 ```
 
-Create the app, then copy the **access token** (starts with `pat-`).
+Create it, then copy the **token** (starts with `pat-`) — you can only see it once.
 
 ### 2. Provide the token (kept out of git)
 
