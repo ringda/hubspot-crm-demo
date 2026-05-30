@@ -1,0 +1,18 @@
+node_modules/
+.env
+.env.local
+*.log
+
+# HubSpot CLI auth / config — CONTAINS TOKENS, never commit
+hubspot.config.yml
+hubspot.config.yml.bak
+.hscli/
+*.hubspot.config.yml
+
+# Claude Code local-only settings (may contain machine-specific paths)
+.claude/settings.local.json
+
+# Local diagnostic scratch files
+_hs_*.txt
+_*.txt
+_*.mjs
