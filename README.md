@@ -1,25 +1,32 @@
-# HubSpot CRM + AI Workflow Demo
+# HubSpot CRM + Retail GTM Workflow Demo
 
 Portfolio demo: **HubSpot MCP Server + Claude Code.** Shows how an AI *skill*
-reads and writes CRM data to support SDR/BDR workflows.
+reads and writes CRM data to support SDR/BDR workflows, then extends the same
+judgment layer into a retail GTM launch-readiness scenario.
 
-> **Core idea:** CRM stores customer *facts*; skills preserve GTM *judgment*.
+> **Core idea:** HubSpot stores customer and partner *facts*; a launch tracker
+> stores product *facts*; the skill preserves GTM *judgment*.
 
-The demo runs a single skill in two directions:
+The demo runs a single skill in three directions:
 
 | Direction | Flow |
 | --------- | ---- |
 | **Inbound (write)** | natural-language prospect signal → skill → CRM-ready record → written to HubSpot |
 | **Outbound (read)** | HubSpot contact context → skill → GTM action memo (next best action + draft outreach) |
+| **Retail launch readiness** | partner/channel signal + SKU launch tracker → channel-readiness memo (risk + owner + next action) |
+
+The `web/` app presents an Anker-style retail GTM launch workflow: channel
+readiness, SKU sales/inventory risk, partner launch signals, and a live assistant
+that preserves risk reasoning before any CRM update.
 
 ---
 
 ## Architecture
 
 ```
-Claude Code ──(.mcp.json)──► @hubspot/mcp-server (stdio, npx) ──► HubSpot CRM
-                  │
-                  └── .claude/skills/hubspot-gtm-workflow  (GTM judgment layer)
+Next.js web app ──► API route ──► AI SDK ──► @hubspot/mcp-server ──► HubSpot CRM
+                       │
+                       └── .claude/skills/hubspot-gtm-workflow  (GTM judgment layer)
 ```
 
 - **MCP server:** [`@hubspot/mcp-server`](https://www.npmjs.com/package/@hubspot/mcp-server)
@@ -27,7 +34,10 @@ Claude Code ──(.mcp.json)──► @hubspot/mcp-server (stdio, npx) ──�
 - **Auth:** a HubSpot **Private App access token**, supplied as the
   `PRIVATE_APP_ACCESS_TOKEN` environment variable — never committed.
 - **Skill:** `.claude/skills/hubspot-gtm-workflow/SKILL.md` encodes the GTM
-  judgment (qualification, dedupe, memo synthesis).
+  judgment (qualification, dedupe, memo synthesis, launch risk reasoning).
+- **Web demo:** `web/` is the portfolio UI. It works in mock mode without an
+  LLM key and in live mode with `ANTHROPIC_API_KEY`, `GROQ_API_KEY`, or
+  `GOOGLE_GENERATIVE_AI_API_KEY`.
 
 ---
 
@@ -101,6 +111,27 @@ and return the demo contacts. If tools don't appear, see Troubleshooting.
 
 ---
 
+## Run the web demo
+
+The web app can run in two modes:
+
+- **Mock mode:** no LLM key. The UI loads and reports whether the HubSpot MCP
+  server is reachable.
+- **Live mode:** add `ANTHROPIC_API_KEY`, `GROQ_API_KEY`, or
+  `GOOGLE_GENERATIVE_AI_API_KEY` in `web/.env.local`; the assistant runs the
+  GTM workflow against the scoped HubSpot tools.
+
+```bash
+cd web
+cp .env.local.example .env.local
+npm install
+npm run dev -- --port 3100
+```
+
+Open `http://localhost:3100`.
+
+---
+
 ## Usage
 
 The skill (`hubspot-gtm-workflow`) triggers automatically on intent. Examples:
@@ -118,12 +149,29 @@ reasoning, returns the record link.
 → pulls Jamie's CRM context + associated deals, returns a GTM action memo with
 a recommended next step and draft outreach.
 
+**Retail launch readiness:**
+> "Audit channel readiness for Amazon, Best Buy, Walmart, and Target. Show
+> launch risks, missing data, owner, and next action."
+
+→ reads the demo launch tracker, turns scattered partner/SKU facts into a
+channel-readiness memo, and clearly separates confirmed facts from new signals.
+
+**Weekly GTM review:**
+> "Prep a weekly GTM business review memo for the launch manager. Include
+> channel risks, SKU risks, owner, next action, and what needs escalation."
+
+→ outputs a launch-manager style memo suitable for a portfolio walkthrough.
+
 ---
 
 ## Demo data
 
 The connected portal contains 5 contacts (Jamie Chen, Sarah Kim, David
 Martinez, Lisa Wang, Alex Nguyen) and 3 deals for end-to-end dry runs.
+
+The retail launch mode also includes mock launch data for four channels
+(Amazon, Best Buy, Walmart, Target) and four SKUs. This data is intentionally
+small so the demo stays explainable in two minutes.
 
 ---
 
@@ -137,6 +185,11 @@ Martinez, Lisa Wang, Alex Nguyen) and 3 deals for end-to-end dry runs.
 │   └── skills/
 │       └── hubspot-gtm-workflow/
 │           └── SKILL.md      # the GTM judgment layer
+├── docs/
+│   └── anker-retail-gtm-launch-plan.md
+├── web/
+│   ├── app/                  # Next.js UI + API route
+│   └── lib/system-prompt.ts  # web copy of the skill prompt
 ├── .gitignore
 └── README.md
 ```
@@ -169,4 +222,6 @@ Martinez, Lisa Wang, Alex Nguyen) and 3 deals for end-to-end dry runs.
 ## Notes
 
 `@hubspot/mcp-server` is in public beta; pin the version for reproducibility.
-This is a portfolio demonstration, not an official HubSpot project.
+This is a portfolio demonstration, not an official HubSpot project. It should
+not be described as production HubSpot administration, pricing-strategy
+ownership, retail account ownership, or formal demand-planning ownership.

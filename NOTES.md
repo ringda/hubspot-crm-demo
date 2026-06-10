@@ -46,3 +46,26 @@ the concept." Only start it when explicitly decided.
 - Real CRM data-gap scan of the demo portal (missing lead_status / company /
   deal-contact associations) — ready material if the hygiene skill is built.
 - Job-search project plan: `xin-job-hunting/.specify/plans/hubspot-crm-demo-plan-20260530.md`
+
+---
+
+# Scope Update — Retail GTM Launch Extension (2026-06-10)
+
+The demo now has one targeted extension: **retail GTM launch readiness**.
+
+This does not change the original boundary. The project is still a lightweight
+portfolio bridge, not proof of production HubSpot administration. The extension
+adds an Anker-style scenario where:
+
+- HubSpot stores partner/customer context.
+- A small launch tracker stores SKU/product facts.
+- The skill turns scattered channel signals into risk, owner, next action,
+  escalation, and a human checkpoint.
+
+The purpose is to fill a specific job-search gap for GTM Specialist roles:
+channel execution, launch coordination, sales/inventory reporting, product data
+QA, and weekly business review judgment.
+
+Honest ceiling stays the same: do **not** claim retail account ownership,
+pricing-strategy ownership, formal demand-planning ownership, or production
+product-launch ownership.

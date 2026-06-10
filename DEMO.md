@@ -1,12 +1,12 @@
 # Demo Script
 
-A 2-minute walkthrough of the `hubspot-gtm-workflow` skill running in both
-directions against live HubSpot CRM data. Run each prompt in Claude Code with
-this project open.
+A 2-3 minute walkthrough of the `hubspot-gtm-workflow` skill running against
+live HubSpot CRM data and a small retail launch tracker. Run each prompt in the
+web app or in Claude Code with this project open.
 
 > **Thesis to narrate:** the CRM stores customer *facts*; the skill preserves
 > GTM *judgment* — the qualification reasoning and next-best-action a raw CRM
-> import would lose.
+> import or launch tracker would lose.
 
 ---
 
@@ -41,7 +41,44 @@ That inference is judgment, not a lookup.
 
 ---
 
-## 2. Inbound — natural-language signal → CRM record (write)
+## 2. Retail launch readiness — channel signal → GTM action memo
+
+> **Prompt:** "Audit channel readiness for Amazon, Best Buy, Walmart, and
+> Target. Show launch risks, missing data, owner, and next action."
+
+**What the skill does**
+1. Reads the embedded launch tracker: channel status, owner, risk, and next
+   action.
+2. Separates confirmed facts from launch judgment: what is ready, what is
+   blocked, who owns the next step, and what needs escalation.
+3. Produces a launch-manager style channel-readiness memo.
+
+**Talking point:** this is the Anker-relevant bridge. HubSpot holds partner
+context, the launch tracker holds SKU/product facts, and the skill turns both
+into a weekly GTM operating view without claiming Xin owned retail accounts or
+pricing strategy.
+
+---
+
+## 3. Weekly review — SKU risk → business review memo
+
+> **Prompt:** "Prep a weekly GTM business review memo for the launch manager.
+> Include channel risks, SKU risks, owner, next action, and what needs
+> escalation."
+
+**What the skill does**
+1. Uses SKU mock data: forecast, actual sales, stock, and risk by product.
+2. Calls out the high-risk item (`T8210 Smart Camera`) because actual sales are
+   above forecast while stock is low.
+3. Combines SKU risk with channel blockers into a concise weekly memo.
+
+**Talking point:** the project is not proving formal demand planning. It proves
+coordination judgment: spotting risk, naming the owner, and making the next
+action visible.
+
+---
+
+## 4. Inbound — natural-language signal → CRM record (write)
 
 > **Prompt:** "Just had a call with Priya Patel, VP Eng at Acme
 > (priya@acme.io). They're evaluating us against a competitor, want to decide
@@ -63,7 +100,7 @@ judgment that would otherwise live only in a rep's head.
 
 ---
 
-## 3. Optional — repair a data gap (write)
+## 5. Optional — repair a data gap (write)
 
 > **Prompt:** "Associate Jamie Chen with the Northstar Ops deal."
 
@@ -79,6 +116,9 @@ memo flagged in step 1.
 - The skill performs **no deletes** by design — cleanup is done by hand in the
   HubSpot UI. (This is a deliberate guardrail, not a limitation.)
 - The token is a HubSpot Service Key in an environment variable, never in git.
+- The retail launch scenario is a portfolio demo. Do not describe it as formal
+  retail account ownership, pricing strategy, product launch ownership, or
+  demand-planning ownership.
 
 ---
 
