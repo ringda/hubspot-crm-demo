@@ -1,0 +1,7 @@
+[mcp_servers.hubspot]
+command = "npx"
+args = [
+    "-y",
+    "@hubspot/mcp-server@0.4.0",
+]
+env_vars = ["PRIVATE_APP_ACCESS_TOKEN"]
